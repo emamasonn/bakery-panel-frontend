@@ -1,9 +1,11 @@
 import React from 'react';
 
-const Home = () => {
+import Navegation from './navegation/Navegation';
+
+function Home() {
     return(
       <div>
-        home
+        <Navegation/>
       </div>
     );
 }
