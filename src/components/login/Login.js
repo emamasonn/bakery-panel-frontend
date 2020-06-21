@@ -26,7 +26,6 @@ const useStyles = makeStyles(theme => ({
     ['@media (max-width:1055px)']: {
       marginTop:"90px"}, 
 },
-  
   content: {
     height: '100%',
     display: 'flex',
