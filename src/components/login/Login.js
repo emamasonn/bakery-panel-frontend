@@ -1,10 +1,16 @@
 import React from 'react';
 import { makeStyles } from '@material-ui/styles';
-import { Grid,Button,TextField,Typography,Box} from '@material-ui/core';
+import Grid from  '@material-ui/core/Grid';
+import Button from '@material-ui/core/Button';
+import TextField from '@material-ui/core/TextField';
+import Box from '@material-ui/core/Box';
+import Typography from '@material-ui/core/Typography';
 import NavegationBar from './NavegationBar'
-import logodos from '../../assets/logodos.png';
+import logodos from '../../Assets/logodos.png';
 import styled from 'styled-components';
 import Footer from './Footer';
+import { Link } from "react-router-dom";
+import Media from 'react-media';
 
 const StyledTextField = styled(TextField)`
   .MuiOutlinedInput-root {
@@ -13,35 +19,27 @@ const StyledTextField = styled(TextField)`
     &.Mui-focused fieldset {
       border-color: rgb(216, 216, 216);} }`;
 const useStyles = makeStyles(theme => ({
-  root: {
+root: {
     height: '100%'
-  },
-  grid: {
+},
+grid: {
     height: '100%'
-  },
-  quote: {
+},
+quote: {
     height: '100%',
     display: 'flex',
     marginTop: '7%',
-    ['@media (max-width:1055px)']: {
-      marginTop:"90px"}, 
 },
-  content: {
+content: {
     height: '100%',
     display: 'flex',
     flexDirection: 'column',
     textAlign:'center',
     justifyContent: "center",
     alignItems: "center",
-    marginTop: 20,
-    ['@media (max-width:771px)']: {
-      marginTop: 80,
-  },
-    ['@media (max-width:600px)']: {
-        marginTop: 50,
-    },
-  },
-  title:{
+    marginTop: 50,
+},
+title:{
     marginBottom: 10,
     fontSize: 70,
     fontFamily: "Dancing Script, cursive",
@@ -53,26 +51,18 @@ const useStyles = makeStyles(theme => ({
     color: "#ad172b",
     width: "95%",
     padding: "10px",
-    ['@media (max-width:840px)']: {
-      width:"60%"},
-      ['@media (max-width:600px)']: {
-      width:"95%"},
-  },
-  textField:{
+},
+textField:{
       width: "95%",
-      padding: "10px",
       marginBottom: "16px",
-      ['@media (max-width:840px)']: {
-        width:"60%"},
-        ['@media (max-width:600px)']: {
-          width:"95%"},
-  },
+},
   img:{
     width: "90%",
-    ['@media (max-width:600px)']: {
-        width: 0,
-    },
-  },
+},
+text:{
+  textDecoration: 'none',
+  color: '#263238',
+}
 }));
 
 function Login(){
@@ -87,11 +77,13 @@ function Login(){
         <Grid
           item xs={0} xl={0} sm={4} md={5} lg={5}
         >
+          <Media query="(min-width: 600px">
           <div className={classes.quote}>
-                <Box mt={4} textAlign="center">
+              <Box mt={4} textAlign="center">
                         <img src={logodos} className={classes.img} alt="logo"/>
                 </Box>
-            </div>
+          </div>
+          </Media>
         </Grid>
         <Grid
           item xs={12} xl={12} sm={8} md={7} lg={7}
@@ -127,7 +119,8 @@ function Login(){
                   type="submit"
                   variant="contained"
                 >
-                  Ingresar
+                  <Link to="/Settings"className={classes.text}>
+                  Ingresar</Link>
                 </Button>
               </form>
           </Box>
