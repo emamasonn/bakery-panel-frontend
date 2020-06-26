@@ -17,7 +17,7 @@ import ImageIcon from '@material-ui/icons/Image';
 import Button from '@material-ui/core/Button';
 import CategoryIcon from '@material-ui/icons/Category';
 import ListLink from './ListLink';
-import Media from 'react-media';
+import Hidden from '@material-ui/core/Hidden';
 
 const drawerWidth = 240;
 const useStyles = makeStyles((theme) => ({
@@ -126,14 +126,14 @@ export default function Navegation() {
     </div>
   );
   return (
-    <div>
+    <div className={classes.root}>
       <div className={classes.nav}>
         <AppBar
           position="fixed"
           className={classes.appBar}
         >
         <Toolbar>
-        <Media query="(max-width: 700px">
+        <Hidden smUp>
           <div className={classes.divButton}>
               {['left'].map((anchor) => (
                 <React.Fragment key={anchor}>
@@ -149,7 +149,7 @@ export default function Navegation() {
                 </React.Fragment>
               ))}
           </div>
-        </Media>
+          </Hidden>       
           <Typography variant="h6" className={classes.title}>
             Panel administrador
           </Typography>
@@ -168,7 +168,7 @@ export default function Navegation() {
       </AppBar>
       </div>
       <div className={classes.root}>
-      <Media query="(min-width: 700px">
+      <Hidden smDown>
           <Drawer
             className={classes.drawer}
             variant="permanent"
@@ -205,7 +205,7 @@ export default function Navegation() {
                           <Divider />
             </div>
           </Drawer>
-      </Media>
+        </Hidden>
       </div>
     </div>
   );

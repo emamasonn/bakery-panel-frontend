@@ -2,11 +2,11 @@ import React, { useState } from 'react';
 import { makeStyles} from '@material-ui/core/styles';
 import Toolbar from '@material-ui/core/Toolbar';
 import Button from '@material-ui/core/Button';
-import Navegation from '../Navegation/Navegation';
 import AddIcon from '@material-ui/icons/Add';
 import SaveAltIcon from '@material-ui/icons/SaveAlt';
 import Form from './Form';
 import Box from '@material-ui/core/Box';
+import Grid from  '@material-ui/core/Grid';
 
 const useStyles = makeStyles((theme) => ({
 root: {
@@ -43,8 +43,8 @@ setShow([...show, {id:(new Date().getTime())/1000, num: show.length}])
 };
 
 return (
-    <div className={classes.root}>
-        <Navegation/>
+    <div >
+        <Grid>
         <main className={classes.content}>
             <Toolbar />
                 {show.map((form, index) => (
@@ -73,6 +73,7 @@ return (
                     </Button>
                 </Box>
             </main>
+            </Grid>
         </div>
 )
 }
