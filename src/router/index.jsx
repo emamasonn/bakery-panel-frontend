@@ -1,14 +1,16 @@
-import React from 'react';
+import React from "react";
 import { BrowserRouter, Switch, Route } from "react-router-dom";
-import Login from '../Components/Login/Login'
-import Settings from '../Components/Settings/Settings'
+import Login from "../components/login/Login";
+import Settings from "../components/Settings/Settings";
+import Account from "../components/account/Account";
 
 export default function Router() {
   return (
-    <BrowserRouter>   
+    <BrowserRouter>
       <Switch>
         <Route exact path="/" component={Login} />
-        <Route exact path='/Settings' component={Settings}/>
+        <Route exact path="/Settings" component={Settings} />
+        <Route exact path="/Account" component={Account} />
       </Switch>
     </BrowserRouter>
   );
