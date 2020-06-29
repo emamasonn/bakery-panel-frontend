@@ -8,8 +8,8 @@ import Button from '@material-ui/core/Button';
 import AddIcon from '@material-ui/icons/Add';
 import Table from './Table';
 
-const StyledTextField = styled(TextField)`
-    .MuiOutlinedInput-root {
+const StyledTextField = styled(TextField)
+    ` .MuiOutlinedInput-root {
     fieldset {
       border-color: rgb(216, 216, 216);
       }
@@ -20,12 +20,14 @@ const StyledTextField = styled(TextField)`
        }`;
 const useStyles = makeStyles((theme) => ({
 content: {
-    flexGrow: 1,
-    padding: theme.spacing(1),
     marginTop:20,
      '& .MuiTextField-root': {
         margin: theme.spacing(2),
         width: 280,
+        '@media (max-width:600px)': {
+          width: "90%",
+          margin: theme.spacing(1),
+      },
     },
 },
 title:{
@@ -38,13 +40,18 @@ title:{
 },
 button:{
     width: 280,
-    color: '#ad172b',
+    color: 'blue',
     margin: theme.spacing(2),
     padding: "14px",
+    '@media (max-width:600px)': {
+      width: "90%",
+      margin: theme.spacing(1),
+  },
 },
 iconButton: {
     marginRight:7,
-}
+},
+
 }));
 
 const Category = () => {
@@ -55,8 +62,6 @@ const add = () => {
 setShow([...show, {id:(new Date().getTime())/1000, num: show.length }])
 };
 
-const [name, setName]= useState('');
-const [description, setDescription]= useState('');
 
 return (
     <div className={classes.content}>
@@ -71,14 +76,13 @@ return (
                     name="name"
                     type="text"
                     variant="outlined"
-                    onChange={ e => setName(e.target.value)}
+                    
                   />
                   <StyledTextField
                     label="Descripcion"
                     name="Description"
                     type="text"
                     variant="outlined"
-                    onChange={ e => setDescription(e.target.value)}
                   />
                   <Button
                       className={classes.button}
@@ -90,12 +94,14 @@ return (
                         >
                      <AddIcon className={classes.iconButton}/>  agregar
                    </Button>
-        <div>
+
+        {/*<div>
             {show.map((table, index) => (
                         <Table key={index}/> 
                             
                     ))}
-        </div>
+            </div>*/}
+        
     </div>
     )
 }

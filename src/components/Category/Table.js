@@ -1,20 +1,19 @@
 import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
-import Container from '@material-ui/core/Container';
 import Typography from '@material-ui/core/Typography';
 import Button from '@material-ui/core/Button';
 import DeleteForeverIcon from '@material-ui/icons/DeleteForever';
 
 const useStyles = makeStyles((theme) => ({
     contentTable:{
+        width: "100%",
+        height: 50,
         background: "#F0F0F0",
         borderRadius: "10px",
-        marginTop: 10,
-        marginBottom: 10,
-        padding: theme.spacing(1),
         margin: theme.spacing(2),
         '@media (max-width:600px)': {
-            width: 280,
+            width: "90%",
+            margin: theme.spacing(1),
         },
     },
     trTable: {
@@ -33,7 +32,6 @@ const useStyles = makeStyles((theme) => ({
             marginLeft: 200,
         },
     },
-    
     tdNameProduct: {
         '@media (max-width:600px)': {
             marginBottom: 10,
@@ -48,26 +46,26 @@ const useStyles = makeStyles((theme) => ({
     },
 }));
 
-const Table = () => {
+const Table = (props) => {
   const classes = useStyles();
 
   return (
-        <Container maxWidth='lg' className={classes.contentTable}>
-            <table className={classes.table}>
+        <div className={classes.contentTable}>
+           <table className={classes.table}>
                 <tbody>
                     <tr className={classes.trTable}>      
                         <td className={classes.tdNameProduct}>
-                            <Typography variant='body2'>Nombre</Typography>
+                            <Typography variant='body2'>nombre</Typography>
                         </td>
                         <td className={classes.tdDescription} 
-                        >Descripcion</td>
+                        >descripcion </td>
                         <td className={classes.deleteIcon}>
                             <Button><DeleteForeverIcon /></Button>
                         </td>
                     </tr>
                 </tbody>
             </table>
-        </Container>
+        </div>
   );
 }
 
