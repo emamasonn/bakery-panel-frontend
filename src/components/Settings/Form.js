@@ -2,10 +2,10 @@ import React, { useState } from 'react'
 import { makeStyles} from '@material-ui/core/styles';
 import TextField from '@material-ui/core/TextField';
 import styled from 'styled-components';
-import Typography from '@material-ui/core/Typography';
 import DeleteIcon from '@material-ui/icons/Delete';
 import Button from '@material-ui/core/Button';
 import Box from '@material-ui/core/Box';
+import Grid from  '@material-ui/core/Grid';
 
 const StyledTextField = styled(TextField)`
     .MuiOutlinedInput-root {
@@ -17,28 +17,24 @@ const StyledTextField = styled(TextField)`
       border-color: rgb(216, 216, 216);
       }
        }`;
-
-const useStyles = makeStyles((theme) => ({     
-    title:{
-        marginBottom: 10,
-        fontSize: 40,
-        fontFamily: "Dancing Script, cursive",
-        display: 'flex',
-        justifyContent: 'center',
-        color: "#ad172b",
-    },
+const useStyles = makeStyles((theme) => ({
+  content: {
+    '& .MuiTextField-root': {
+      margin: theme.spacing(2),
+      width: 280,
+  },
+},
     button:{
         color: '#ad172b',
         padding: "10px",
-        marginLeft:15,
-        marginTop:10,
+        margin: theme.spacing(1),
   },
     iconButton: {
         marginRight:7,
 }
 }));         
 
-function Form(props){
+function Form(){
 const classes = useStyles();
 
 const [button, setButton] = useState(true);
@@ -46,90 +42,75 @@ const [button, setButton] = useState(true);
 return (
         <div>
           {button ? (
-                    <div> <Typography
-                    className={classes.title}
-                  >
-                    Tienda {props.title}
-                  </Typography>
+            <Grid>
+                  <div className={classes.content}>
                   <StyledTextField
-                    className={classes.textField}
                     label="Facebook"
                     name="facebook"
                     type="text"
                     variant="outlined"
                   />
-                  <StyledTextField
-                    className={classes.textField}
+                  <StyledTextField             
                     label="Instagram"
                     name="instagram"
                     type="text"
                     variant="outlined"
                   />
-                  <StyledTextField
-                    className={classes.textField}
+                  <StyledTextField               
                     label="Link de tienda"
                     name="tienda"
                     type="text"
                     variant="outlined"
                   />
-                  <StyledTextField
-                    className={classes.textField}
+                  <StyledTextField                
                     label="Nombre de la panaderia"
                     name="nombre de la panaderia"
                     type="text"
                     variant="outlined"
                   />
-                  <StyledTextField
-                    className={classes.textField}
+                  <StyledTextField             
                     label="Direccion en coordenadas"
                     name="coordenadas"
                     type="text"
                     variant="outlined"
                   />
-                  <StyledTextField
-                    className={classes.textField}
+                  <StyledTextField              
                     label="Direccion Oficial"
                     name="direccion oficial"
                     type="text"
                     variant="outlined"
                   />
-                  <StyledTextField
-                    className={classes.textField}
+                  <StyledTextField             
                     label="Dias"
                     name="dias"
                     type="text"
                     variant="outlined"
                   />
-                  <StyledTextField
-                    className={classes.textField}
+                  <StyledTextField            
                     label="Horario"
                     name="horario"
                     type="text"
                     variant="outlined"
                   />
-                  <StyledTextField
-                    className={classes.textField}
+                  <StyledTextField      
                     label="Telefono"
                     name="telefono"
                     type="text"
                     variant="outlined"
                   />
-                  <StyledTextField
-                    className={classes.textField}
+                  <StyledTextField         
                     label="Celular"
                     name="telefono"
                     type="text"
                     variant="outlined"
                   />
-                  <StyledTextField
-                    className={classes.textField}
+                  <StyledTextField              
                     label="Email"
                     name="email"
                     type="text"
                     variant="outlined"
                   />
-                  <StyledTextField
-                    className={classes.textField}
+                  <StyledTextField                
                     label="Notas"
                     name="notas"
                     type="text"
@@ -150,6 +131,7 @@ return (
                   </Button>
                 </Box>
             </div>
+            </Grid>
         ) : (
       <div></div>
       )}
