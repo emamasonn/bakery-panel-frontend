@@ -7,6 +7,7 @@ import Navegation from "../components/Navegation/Navegation";
 import Grid from "@material-ui/core/Grid";
 import ListLink from "../components/Navegation/ListLink";
 import Hidden from "@material-ui/core/Hidden";
+import Account from "../components/Account/Account";
 
 export default function Router() {
   return (
@@ -25,6 +26,7 @@ export default function Router() {
             <Route exact path="/" component={Login} />
             <Route exact path="/Category" component={Category} />
             <Route exact path="/Settings" component={Settings} />
+            <Route exact path="/Account" component={Account} />
           </Switch>
         </Grid>
       </Grid>

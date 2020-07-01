@@ -1,6 +1,5 @@
-import React, { useState } from "react";
+import React from "react";
 import { makeStyles } from "@material-ui/core/styles";
-import Navegation from "../navegation/Navegation";
 import Toolbar from "@material-ui/core/Toolbar";
 import TextField from "@material-ui/core/TextField";
 import styled from "styled-components";
@@ -9,7 +8,7 @@ import Button from "@material-ui/core/Button";
 import Grid from "@material-ui/core/Grid";
 import Paper from "@material-ui/core/Paper";
 import Avatar from "@material-ui/core/Avatar";
-import FotoPerfil from "../../assets/avatar.jpg";
+import FotoPerfil from "../../Assets/avatar.jpg";
 import Divider from "@material-ui/core/Divider";
 import EditIcon from "@material-ui/icons/Edit";
 import Fab from "@material-ui/core/Fab";
@@ -91,7 +90,6 @@ function Account(props) {
 
   return (
     <div className={classes.root}>
-      <Navegation />
       <div className={classes.content}>
         <Toolbar />
         <Typography className={classes.title}>
@@ -166,6 +164,7 @@ function Account(props) {
                   size="large"
                   variant="contained"
                   color="primary"
+                  type="submit"
                   onClick="submit"
                 >
                   Guardar
