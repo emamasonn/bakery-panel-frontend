@@ -6,6 +6,7 @@ import DeleteIcon from '@material-ui/icons/Delete';
 import Button from '@material-ui/core/Button';
 import Box from '@material-ui/core/Box';
 import Grid from  '@material-ui/core/Grid';
+import Typography from '@material-ui/core/Typography';
 
 const StyledTextField = styled(TextField)`
     .MuiOutlinedInput-root {
@@ -34,7 +35,7 @@ const useStyles = makeStyles((theme) => ({
 }
 }));         
 
-function Form(){
+function Form(props){
 const classes = useStyles();
 
 const [button, setButton] = useState(true);
@@ -42,7 +43,12 @@ const [button, setButton] = useState(true);
 return (
         <div>
           {button ? (
-            <Grid>
+            <Grid>  
+                <Typography
+                        className={classes.title}
+                      >
+                        {props.title}
+                      </Typography>
                   <div className={classes.content}>
                   <StyledTextField
                     label="Facebook"
