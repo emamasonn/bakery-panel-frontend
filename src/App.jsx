@@ -7,9 +7,7 @@ import './App.css';
 function App() {
   return (
     <Provider store={store}>
-      <div>
         <Router />
-      </div>
     </Provider>
   );
 }

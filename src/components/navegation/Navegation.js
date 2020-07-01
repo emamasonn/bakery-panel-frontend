@@ -101,7 +101,7 @@ export default function Navegation() {
       onKeyDown={toggleDrawer(anchor, false)}
     >
       <ListLink
-        link="/Account2"
+        link="/Products"
         key="Products"
         text="Productos"
         icon={<ShopIcon />}
