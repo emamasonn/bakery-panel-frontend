@@ -2,7 +2,6 @@ import React, { useState } from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import Toolbar from "@material-ui/core/Toolbar";
 import Navegation from "../Navegation/Navegation";
-import Product from "./Product";
 import List from "@material-ui/core/List";
 import ListItem from "@material-ui/core/ListItem";
 import ListItemSecondaryAction from "@material-ui/core/ListItemSecondaryAction";
@@ -25,10 +24,15 @@ import AddIcon from "@material-ui/icons/Add";
 const useStyles = makeStyles((theme) => ({
   root: {
     display: "flex",
+    flexGrow: 1,
+    padding: theme.spacing(1),
+    "& .MuiTextField-root": {
+      margin: theme.spacing(2),
+      width: 280,
+    },
+    marginTop: 20,
   },
   content: {
-    display: "flex",
-    flexDirection: "column",
     flexGrow: 1,
     padding: theme.spacing(1),
     "& .MuiTextField-root": {
@@ -79,55 +83,79 @@ const useStyles = makeStyles((theme) => ({
     marginRight: 50,
   },
   listPaper: {
+    display: "flex",
     backgroundColor: "#F4F6F8",
   },
 }));
 
-function Products() {
+function Product() {
   const classes = useStyles();
-  const [show, setShow] = useState([
-    { id: new Date().getTime() / 1000, num: 0 },
-  ]);
 
-  const add = () => {
-    setShow([...show, { id: new Date().getTime() / 1000, num: show.length }]);
-  };
+  const [button, setButton] = useState(true);
 
   return (
-    <div className={classes.root}>
-      <Navegation />
-      <main className={classes.content}>
-        <Toolbar />
-        <Typography className={classes.title}>Productos</Typography>
-        <div className={classes.topControls}>
-          <Paper component="form" className={classes.paperRoot}>
-            <InputBase
-              className={classes.inputSearch}
-              placeholder="Buscar un producto"
-              inputProps={{ "aria-label": "Buscar un producto" }}
-            />
-            <IconButton
-              type="submit"
-              className={classes.iconButton}
-              aria-label="search"
-            >
-              <SearchIcon />
-            </IconButton>
-          </Paper>
-          <Fab
-            color="primary"
-            onClick={() => add()}
-            aria-label="add"
-            className={classes.addButton}
-          >
-            <AddIcon />
-          </Fab>
-        </div>
-        {show.map(() => (
-          <Product />
-        ))}
-      </main>
-    </div>
+    <React.Fragment className={classes.content}>
+      {button ? (
+        <Paper className={classes.listPaper}>
+          <List dense className={classes.listRoot}>
+            return (
+            <ListItem>
+              <IconButton
+                aria-label="editar"
+                color="primary"
+                className={classes.margin}
+              >
+                <EditIcon />
+              </IconButton>
+              <IconButton
+                aria-label="eliminar"
+                color="secondary"
+                className={classes.margin}
+                type="submit"
+                onClick={() => {
+                  setButton(!button);
+                }}
+              >
+                <DeleteIcon />
+              </IconButton>
+              <ListItemAvatar>
+                <Avatar alt={"Fotito del producto"} />
+              </ListItemAvatar>
+              <TextField
+                id="standard-read-only-input"
+                placeholder="Nombre de tu producto"
+                InputProps={{
+                  readOnly: true,
+                }}
+              />
+              <Input
+                id="standard-adornment-amount"
+                type="number"
+                startAdornment={
+                  <InputAdornment position="start">$</InputAdornment>
+                }
+              />
+              <TextField
+                id="standard-read-only-input"
+                placeholder="Categoría de tu producto"
+                InputProps={{
+                  readOnly: true,
+                }}
+              />
+              <TextField
+                id="standard-read-only-input"
+                multiline
+                placeholder="Descripción de tu producto"
+              />
+              <Input type="file"></Input>
+            </ListItem>
+            );
+          </List>
+        </Paper>
+      ) : (
+        <div></div>
+      )}
+    </React.Fragment>
   );
 }
-export default Products;
+export default Product;
