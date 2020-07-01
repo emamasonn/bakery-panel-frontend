@@ -4,6 +4,7 @@ import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
 import Button from '@material-ui/core/Button';
 import Table from  './Table';
+import AddIcon from '@material-ui/icons/Add';
 
 const useStyles = makeStyles((theme) => ({
 content: {
@@ -18,34 +19,25 @@ title:{
     color: "black",
 },
 ui:{
-    display: 'flex',
-    justifyContent: 'center',
+    display: "flex",
+	flexDirection: "row",
+	flexWrap: "wrap",
+	justifyContent: "flex-end",
+	alignItems: "stretch",
+	alignContent: "flex-start",
     color: "#ad172b",
-    marginLeft: theme.spacing(2),
-    marginRight: theme.spacing(2),
-    '@media (max-width:600px)': {
-      display: "flex",
-      flexDirection: "column",
-      justifyContent: 'center',
-      margin: theme.spacing(0.5),
-  },
 },
 button:{
-    width: "20%",
-    color: 'blue',
-    margin: theme.spacing(1),
-    padding: "14px",
+    margin: theme.spacing(3),
     '@media (max-width:600px)': {
-      width: "100%",
-      margin: theme.spacing(0),
-  },
+        margin: theme.spacing(0),
+    },
 },
 table:{
     display: 'flex',
     justifyContent: 'center',
     flexDirection: "column",
 },
-
 }));
 
 const Category = () => {
@@ -62,6 +54,12 @@ return (
             >
                 Categorias
             </Typography>
+            <div  className={classes.table}>
+                {show.map((form, index) => (
+                    <Table key={index}/>
+                  ))
+                }
+            </div>
             <div className={classes.ui}>
                 <Button
                     className={classes.button}
@@ -70,14 +68,8 @@ return (
                     variant="outlined" 
                     color="primary"
                     onClick={() => add()}
-                > agregar
+                > <AddIcon/>
                 </Button>
-            </div>
-            <div  className={classes.table}>
-                {show.map((form, index) => (
-                    <Table key={index}/>
-                  ))
-                }
             </div>
     </div>
   )
