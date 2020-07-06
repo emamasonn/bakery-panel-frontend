@@ -3,11 +3,8 @@ import { makeStyles } from "@material-ui/core/styles";
 import Toolbar from "@material-ui/core/Toolbar";
 import Button from "@material-ui/core/Button";
 import AddIcon from "@material-ui/icons/Add";
-import SaveAltIcon from "@material-ui/icons/SaveAlt";
 import Form from "./Form";
 import Box from "@material-ui/core/Box";
-import Grid from "@material-ui/core/Grid";
-import Typography from "@material-ui/core/Typography";
 
 const useStyles = makeStyles((theme) => ({
   content: {
@@ -19,20 +16,16 @@ const useStyles = makeStyles((theme) => ({
     margin: theme.spacing(1),
   },
   button: {
-    color: "#ad172b",
-    margin: "10px",
     padding: "10px",
   },
   iconButton: {
+    color: "blue",
     marginRight: 7,
   },
-  title: {
-    marginBottom: 10,
-    fontSize: 40,
-    fontFamily: "Dancing Script, cursive",
+  form: {
     display: "flex",
     justifyContent: "center",
-    color: "#ad172b",
+    flexDirection: "column",
   },
 }));
 
@@ -41,43 +34,29 @@ function Settings() {
   const [show, setShow] = useState([
     { id: new Date().getTime() / 1000, num: 0 },
   ]);
-
   const add = () => {
     setShow([...show, { id: new Date().getTime() / 1000, num: show.length }]);
   };
 
   return (
     <div className={classes.content}>
-      <Grid xs={12} sm={12} md={12} xl={12}>
-        <Toolbar />
-        <Typography className={classes.title}>Tienda</Typography>
+      <Toolbar />
+      <div className={classes.form}>
         {show.map((form, index) => (
-          <Form key={index} title={index} />
+          <Form key={index} />
         ))}
-        {
-          <Box textAlign="center" className={classes.divButton}>
-            <Button
-              className={classes.button}
-              size="large"
-              type="submit"
-              variant="outlined"
-              color="primary"
-              onClick={() => add()}
-            >
-              <AddIcon className={classes.iconButton} /> Abrir nueva tienda
-            </Button>
-            <Button
-              className={classes.button}
-              size="large"
-              type="submit"
-              variant="outlined"
-              color="primary"
-            >
-              <SaveAltIcon className={classes.iconButton} /> Guardar Cambios
-            </Button>
-          </Box>
-        }
-      </Grid>
+      </div>
+      <Box textAlign="right" className={classes.divButton}>
+        <Button
+          className={classes.button}
+          size="large"
+          type="submit"
+          variant="outlined"
+          onClick={() => add()}
+        >
+          <AddIcon className={classes.iconButton} /> nueva tienda
+        </Button>
+      </Box>
     </div>
   );
 }

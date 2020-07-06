@@ -1,11 +1,11 @@
 import React from "react";
 import { BrowserRouter, Switch, Route } from "react-router-dom";
-import Login from "../components/Login/Login";
+import Login from "../components/login/Login";
 import Settings from "../components/Settings/Settings";
 import Category from "../components/Category/Category";
-import Navegation from "../components/Navegation/Navegation";
+import Navegation from "../components/navegation/Navegation";
 import Grid from "@material-ui/core/Grid";
-import ListLink from "../components/Navegation/ListLink";
+import ListLink from "../components/navegation/ListLink";
 import Hidden from "@material-ui/core/Hidden";
 import Account from "../components/Account/Account";
 
