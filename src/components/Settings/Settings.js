@@ -3,7 +3,6 @@ import { makeStyles} from '@material-ui/core/styles';
 import Toolbar from '@material-ui/core/Toolbar';
 import Button from '@material-ui/core/Button';
 import AddIcon from '@material-ui/icons/Add';
-import SaveAltIcon from '@material-ui/icons/SaveAlt';
 import Form from './Form';
 import Box from '@material-ui/core/Box';
 
@@ -17,16 +16,16 @@ divButton:{
     margin: theme.spacing(1),
 },
 button:{
-    color: '#ad172b',
-    margin: "10px",
     padding: "10px",
 },
 iconButton: {
+    color:"blue",
     marginRight:7,
 },
 form:{
     display: 'flex',
     justifyContent: 'center',
+    flexDirection: "column",
 }
 }));
 
@@ -43,32 +42,22 @@ return (
              <Toolbar />
                 <div className={classes.form}>
                     { show.map((form, index) => (
-                            <Form key={index}/>
+                        <Form key={index}/>
                     )) 
                     }
                 </div>
-                <Box textAlign="center" className={classes.divButton}>
+                <Box textAlign="right" className={classes.divButton}>
                     <Button
-                    className={classes.button}
-                    size="large"
-                    type="submit"
-                    variant="outlined" 
-                    color="primary"
-                    onClick={() => add()}
-                        >
-                    <AddIcon className={classes.iconButton}/>  Abrir nueva tienda
-                        </Button>
-                    <Button
-                    className={classes.button}
-                    size="large"
-                    type="submit"
-                    variant="outlined" 
-                    color="primary"
-                    >
-                    <SaveAltIcon className={classes.iconButton}/> Guardar Cambios
+                        className={classes.button}
+                        size="large"
+                        type="submit"
+                        variant="outlined" 
+                        onClick={() => add()}
+                            >
+                        <AddIcon className={classes.iconButton}/> nueva tienda
                     </Button>
                 </Box>
-            </div>
+        </div>
 )
 }
 export default Settings;
