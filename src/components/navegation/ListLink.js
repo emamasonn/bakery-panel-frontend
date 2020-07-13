@@ -13,6 +13,7 @@ import AccountCircleIcon from '@material-ui/icons/AccountCircle';
 import ImageIcon from '@material-ui/icons/Image';
 import CategoryIcon from '@material-ui/icons/Category';
 import Toolbar from '@material-ui/core/Toolbar';
+import MarkunreadMailboxIcon from '@material-ui/icons/MarkunreadMailbox';
 
 const useStyles = makeStyles((theme) => ({
 listItem:{
@@ -85,6 +86,18 @@ text:{
                         </ListItemIcon>
                         <ListItemText>
                             <Typography variant="body1" >Cuenta
+                            </Typography> 
+                        </ListItemText>
+                    </ListItem>
+                </Link>
+                <Divider />
+                <Link to="/Orders" className={classes.text}>
+                    <ListItem button key="/Orders" className={classes.listItem}>
+                        <ListItemIcon>
+                            <MarkunreadMailboxIcon/>
+                        </ListItemIcon>
+                        <ListItemText>
+                            <Typography variant="body1" >Pedidos
                             </Typography> 
                         </ListItemText>
                     </ListItem>
