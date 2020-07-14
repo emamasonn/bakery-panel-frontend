@@ -1,0 +1,1 @@
+export const TEST_VARS_ACCOUNT = 'TEST_VARS_ACCOUNT';
