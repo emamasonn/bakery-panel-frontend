@@ -59,8 +59,8 @@ buttonDetail: {
       color: '#ad172b',
       background: '#fafafa',
     }
-  },
-  buttonEdit: {
+},
+buttonEdit: {
     position: 'absolute',
     top: 125,
     right: 5,
@@ -77,26 +77,26 @@ buttonDetail: {
      '@media (max-width:600px)': {
         right: "68%",
     },
-  },
-  textCard:{
+},
+textCard:{
     position: 'absolute',
     top: 135,
     right: 50,
     fontSize: 18,
     color:'white'
-  },
-  imgProduct:{
+},
+imgProduct:{
     height: 170,
-  },
-  imgProductModal:{
+},
+imgProductModal:{
     width:"50%",
     height:300,
     borderRadius:10,
     '@media (max-width:600px)': {
         width: "100%",
     },
-  },
-  textCheck:{
+},
+textCheck:{
     background:"#3f51b5",
     padding:4,
     borderRadius:18,
@@ -107,13 +107,13 @@ buttonDetail: {
     '@media (max-width:600px)': {
         width: "80%",
     },
-  },
-  modal: {
+},
+modal: {
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'center',
-  },
-  paper: {
+},
+paper: {
     backgroundColor: theme.palette.background.paper,
     width:"60%",
     borderRardius:10,
@@ -127,7 +127,7 @@ buttonDetail: {
         width:"90%",
     },
 },
-  modalText:{
+modalText:{
     marginLeft:30,
     flexDirection:"column",
     '@media (max-width:600px)': {
@@ -136,7 +136,7 @@ buttonDetail: {
     },
 }
 }))
-const CardImage = () => {
+const CardImage = ({id, handleRemove}) => {
     const classes = useStyles()
     const [datos, setDatos] = useState({
         name: '',
@@ -178,13 +178,19 @@ const CardImage = () => {
                     alt="Image product"
                     title="Image Product"
                     image={image.image}/>
-                    <Typography className={classes.textCard}>{datos.name}</Typography>
-                    <Button className={classes.buttonDetail} onClick={handleOpen}><SearchIcon /></Button>
-                    <Button className={classes.buttonEdit} onClick={() => save()}>
-                        <CreateIcon fontSize="small"/>
-                    </Button>
-                </CardActionArea>
-            </Card>
+                <Typography className={classes.textCard}>
+                    {datos.name}
+                </Typography>
+                <Button className={classes.buttonDetail}
+                    onClick={handleOpen}>
+                    <SearchIcon />
+                </Button>
+                <Button className={classes.buttonEdit} 
+                        onClick={() => save()}>
+                    <CreateIcon fontSize="small"/>
+                </Button>
+            </CardActionArea>
+        </Card>
         ) 
         : 
         (<Box className={classes.boxEdit}>
@@ -221,11 +227,14 @@ const CardImage = () => {
                     rows={2}
                     variant="outlined"/>
             <Box align='center'>
-                <ButtonGroup  size="small" aria-label="small outlined button group">      
-                    <Button size="small"  variant="outlined">
+                <ButtonGroup size="small" 
+                             aria-label="small outlined button group">      
+                    <Button size="small" 
+                            onClick={() => {handleRemove(id);}}>
                         <DeleteIcon fontSize="small"/>
                     </Button>
-                    <Button size="small" onClick={() => save()} variant="outlined">
+                    <Button size="small" 
+                            onClick={() => save()}>
                         <CheckIcon fontSize="small"/>
                     </Button>
                 </ButtonGroup>
@@ -243,23 +252,28 @@ const CardImage = () => {
         BackdropComponent={Backdrop}
         BackdropProps={{
           timeout: 500,
-        }}
-      >
+        }}>
         <Fade in={open}>
-          <div className={classes.paper}>
-            <CardMedia
-                        className={classes.imgProductModal}
-                        component="img"
-                        alt="Image product"
-                        title="Image Product"
-                        image={image.image}/>
-            <Box className={classes.modalText}>
-                <Typography variant="h3" color="initial">{datos.name}</Typography>
-                <Typography variant="h6" color="initial">{datos.description}</Typography>
-            </Box>
-          </div>
+            <div className={classes.paper}>
+                  <CardMedia
+                      className={classes.imgProductModal}
+                      component="img"
+                      alt="Image product"
+                      title="Image Product"
+                      image={image.image}/>
+                  <Box className={classes.modalText}>
+                      <Typography variant="h4"
+                                  color="initial">
+                          {datos.name}
+                      </Typography>
+                      <Typography variant="h6" 
+                                  color="initial">
+                          {datos.description}
+                      </Typography>
+                  </Box>
+              </div>
         </Fade>
-      </Modal>
+    </Modal>
 </Box>
 )
 }

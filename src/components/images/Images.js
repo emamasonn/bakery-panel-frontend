@@ -26,10 +26,15 @@ const useStyles = makeStyles((theme) => ({
 
 function Image() {
   const classes = useStyles(); 
+
   const [card, setCard] = useState([])
 
   const add = () => {
     setCard([...card, {id:(new Date().getTime())/1000, num: card.length}])
+  }
+  const handleRemove = (id) => {
+    const newShow = card.filter(item => item.id !== id);
+    setCard(newShow);
   }
   return (
     <div>
@@ -49,7 +54,9 @@ function Image() {
         </Box>
         <Box className={classes.boxCard}>
             {card.map((card) =>(
-                <CardImage key={card.id}/>
+                <CardImage key={card.id}
+                id={card.id}
+                handleRemove={handleRemove}/>
             ))}
         </Box>
     </div>
