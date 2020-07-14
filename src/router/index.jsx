@@ -22,7 +22,7 @@ export default function Router() {
             <ListLink />
           </Grid>
         </Hidden>
-        <Grid item xs={12} sm={10} md={10} xl={10} lg={10}>
+        <Grid item xs={12} sm={12} md={10} xl={10} lg={10}>
             <Switch>
               <Route exact path="/" component={Login} />
               <Route exact path="/Category" component={Category} />
