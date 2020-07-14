@@ -8,7 +8,7 @@ import Grid from  '@material-ui/core/Grid';
 import ListLink from  '../components/navegation/ListLink';
 import Hidden from '@material-ui/core/Hidden';
 import Orders from '../components/orders/Orders';
-
+import Images from '../components/images/Images';
 
 export default function Router() {
   return (
@@ -28,6 +28,7 @@ export default function Router() {
               <Route exact path="/Category" component={Category} />
               <Route exact path='/Settings' component={Settings}/>
               <Route exact path='/Orders' component={Orders}/>
+              <Route exact path='/Images' component={Images}/>
             </Switch>
         </Grid>
     </Grid>
