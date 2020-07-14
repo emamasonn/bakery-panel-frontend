@@ -38,26 +38,33 @@ function Settings() {
     setShow([...show, { id: new Date().getTime() / 1000, num: show.length }]);
   };
 
-  return (
-    <div className={classes.content}>
-      <Toolbar />
-      <div className={classes.form}>
-        {show.map((form, index) => (
-          <Form key={index} />
-        ))}
-      </div>
-      <Box textAlign="right" className={classes.divButton}>
-        <Button
-          className={classes.button}
-          size="large"
-          type="submit"
-          variant="outlined"
-          onClick={() => add()}
-        >
-          <AddIcon className={classes.iconButton} /> nueva tienda
-        </Button>
-      </Box>
-    </div>
-  );
+ const handleRemove = (id) => {
+    const newShow = show.filter(item => item.id !== id);
+    setShow(newShow);
+  }
+return (
+        <div className={classes.content}>
+             <Toolbar />
+                <div className={classes.form}>
+                    { show.map((form, index) => (
+                        <Form key={form.id}
+                              id={form.id}
+                              handleRemove={handleRemove}/>
+                    )) 
+                    }
+                </div>
+                <Box textAlign="right" className={classes.divButton}>
+                    <Button
+                        className={classes.button}
+                        size="large"
+                        type="submit"
+                        variant="outlined" 
+                        onClick={() => add()}
+                            >
+                        <AddIcon className={classes.iconButton}/> nueva tienda
+                    </Button>
+                </Box>
+        </div>
+)
 }
 export default Settings;

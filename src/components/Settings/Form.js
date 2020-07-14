@@ -55,7 +55,7 @@ const useStyles = makeStyles((theme) => ({
 
 }));         
 
-function Form(){
+const Form = ({id, handleRemove}) => {
 const classes = useStyles();
 const [datos, setDatos] = useState({
   panaderia:'',
@@ -72,7 +72,6 @@ const [datos, setDatos] = useState({
   notas:'',
 });
 
-const [del, setDelete] = useState(true);
 
 const [edit, setEdit] = useState(true);
 
@@ -82,7 +81,6 @@ setDatos({...datos, [event.target.name] : event.target.value})
 
 return (
         <div>
-          {del ? (
             <Grid>  
                 <Typography className={classes.title}>
                     {datos.panaderia}
@@ -248,17 +246,11 @@ return (
                             size="large"
                             type="submit"
                             variant="outlined"
-                            onClick={() => {
-                              setDelete(!del);
-                            }}
-                          >
+                            onClick={() => {handleRemove(id);}}>
                           <DeleteIcon className={classes.iconButton}/>
                         </Button>
                     </Box>
             </Grid>
-        ) : (
-      <div></div>
-      )}
     </div>
   )
 }
