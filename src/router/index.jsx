@@ -1,13 +1,14 @@
 import React from "react";
 import { BrowserRouter, Switch, Route } from "react-router-dom";
-import Login from "../components/login/Login";
-import Settings from "../components/Settings/Settings";
-import Category from "../components/Category/Category";
-import Navegation from "../components/navegation/Navegation";
-import Grid from "@material-ui/core/Grid";
-import ListLink from "../components/navegation/ListLink";
-import Hidden from "@material-ui/core/Hidden";
-import Account from "../components/account/Account";
+import Login from '../components/login/Login'
+import Settings from '../components/Settings/Settings'
+import Category from '../components/Category/Category'
+import Navegation from '../components/navegation/Navegation'    
+import Grid from  '@material-ui/core/Grid';
+import ListLink from  '../components/navegation/ListLink';
+import Hidden from '@material-ui/core/Hidden';
+import Orders from '../components/orders/Orders';
+import Images from '../components/images/Images';
 
 export default function Router() {
   return (
@@ -22,12 +23,13 @@ export default function Router() {
           </Grid>
         </Hidden>
         <Grid item xs={12} sm={10} md={10} xl={10} lg={10}>
-          <Switch>
-            <Route exact path="/" component={Login} />
-            <Route exact path="/Category" component={Category} />
-            <Route exact path="/Settings" component={Settings} />
-            <Route exact path="/Account" component={Account} />
-          </Switch>
+            <Switch>
+              <Route exact path="/" component={Login} />
+              <Route exact path="/Category" component={Category} />
+              <Route exact path='/Settings' component={Settings}/>
+              <Route exact path='/Orders' component={Orders}/>
+              <Route exact path='/Images' component={Images}/>
+            </Switch>
         </Grid>
       </Grid>
     </BrowserRouter>
