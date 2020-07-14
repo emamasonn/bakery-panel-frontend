@@ -1,0 +1,1 @@
+export const TEST_VARS_SETTING = 'TEST_VARS_SETTING';

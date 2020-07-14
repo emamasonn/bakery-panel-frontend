@@ -7,7 +7,7 @@ import Navegation from "../components/navegation/Navegation";
 import Grid from "@material-ui/core/Grid";
 import ListLink from "../components/navegation/ListLink";
 import Hidden from "@material-ui/core/Hidden";
-import Account from "../components/Account/Account";
+import Account from "../components/account/Account";
 
 export default function Router() {
   return (
