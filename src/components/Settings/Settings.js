@@ -37,12 +37,18 @@ const add = () => {
 setShow([...show, {id:(new Date().getTime())/1000, num: show.length}])
 };
 
+ const handleRemove = (id) => {
+    const newShow = show.filter(item => item.id !== id);
+    setShow(newShow);
+  }
 return (
         <div className={classes.content}>
              <Toolbar />
                 <div className={classes.form}>
                     { show.map((form, index) => (
-                        <Form key={index}/>
+                        <Form key={form.id}
+                              id={form.id}
+                              handleRemove={handleRemove}/>
                     )) 
                     }
                 </div>
