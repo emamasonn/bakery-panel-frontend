@@ -46,6 +46,10 @@ const [show, setShow] = useState([{id: (new Date().getTime())/1000, num: 0}]);
 const add = () => {
 setShow([...show, {id:(new Date().getTime())/1000, num: show.length}])
 };
+const handleRemove = (id) => {
+    const newShow = show.filter(item => item.id !== id);
+    setShow(newShow);
+  }
 return (
     <div className={classes.content}>
         <Toolbar />
@@ -56,7 +60,9 @@ return (
             </Typography>
             <div  className={classes.table}>
                 {show.map((form, index) => (
-                    <Table key={index}/>
+                    <Table key={form.id}
+                            id={form.id}
+                            handleRemove={handleRemove}/>
                   ))
                 }
             </div>
