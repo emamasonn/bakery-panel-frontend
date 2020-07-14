@@ -70,14 +70,12 @@ const useStyles = makeStyles((theme) => ({
     }
 }));
 
-const Table = () => {
+const Table = ({id, handleRemove}) => {
     const classes = useStyles();
     const [datos, setDatos] = useState({
                                         name: '',
                                         description:'',
                                       });
-
-    const [del, setDelete] = useState(true);
 
     const [edit, setEdit] = useState(true);
 
@@ -88,7 +86,6 @@ const Table = () => {
     return (
 
     <div> 
-    {del ?(   
         <Paper className={classes.root}>
             {edit ? ( 
                 <div className={classes.editInfo}> 
@@ -125,9 +122,7 @@ const Table = () => {
                 <Button 
                     variant="outlined"
                     className={classes.button}
-                    onClick={() => {
-                        setDelete(!del);
-                      }} 
+                    onClick={() => {handleRemove(id);}}
                 > 
                     <DeleteOutlinedIcon className={classes.deleteIcon}/> 
                 </Button>
@@ -144,8 +139,6 @@ const Table = () => {
                 </Button>
             </div>
         </Paper>
-    ) : 
-    (<div></div>)} 
     </div>
     )
 }
