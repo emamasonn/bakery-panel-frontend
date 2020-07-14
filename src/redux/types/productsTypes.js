@@ -1,0 +1,1 @@
+export const TEST_VARS_PRODUCT = 'TEST_VARS_PRODUCT';

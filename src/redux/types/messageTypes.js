@@ -1,0 +1,1 @@
+export const TEST_VARS_MESSAGE = 'TEST_VARS_MESSAGE';

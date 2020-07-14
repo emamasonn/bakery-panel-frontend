@@ -55,7 +55,7 @@ const useStyles = makeStyles((theme) => ({
 
 }));         
 
-function Form([id, handleRemove]){
+const Form = ({id, handleRemove}) => {
 const classes = useStyles();
 const [datos, setDatos] = useState({
   panaderia:'',
