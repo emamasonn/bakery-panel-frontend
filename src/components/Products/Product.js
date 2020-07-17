@@ -95,10 +95,12 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const Product = () => {
+const Product = ({ createProduct }) => {
   const classes = useStyles();
-  const [datos, setDatos] = useState({
+  const [productData, setProductData] = useState({
     name: "",
+    price: "",
+    category: "",
     description: "",
   });
 
@@ -107,7 +109,7 @@ const Product = () => {
   const [edit, setEdit] = useState(true);
 
   const handleInputChange = (event) => {
-    setDatos({ ...datos, [event.target.name]: event.target.value });
+    setProductData({ ...productData, [event.target.name]: event.target.value });
   };
 
   return (
@@ -123,7 +125,7 @@ const Product = () => {
             <div className={classes.editInfo}>
               <TextField
                 className={classes.textfieldSmall}
-                defaultValue={datos.name}
+                defaultValue={productData.name}
                 label="Nombre"
                 name="name"
                 type="text"
@@ -132,9 +134,9 @@ const Product = () => {
               />
               <TextField
                 className={classes.textfieldSmall}
-                defaultValue={datos.precio}
+                defaultValue={productData.price}
                 label="Precio"
-                name="precio"
+                name="price"
                 type="text"
                 variant="outlined"
                 onChange={handleInputChange}
@@ -142,9 +144,9 @@ const Product = () => {
 
               <TextField
                 className={classes.textfieldSmall}
-                defaultValue={datos.categoria}
+                defaultValue={productData.category}
                 label="Categoría"
-                name="categoria"
+                name="category"
                 type="text"
                 variant="outlined"
                 onChange={handleInputChange}
@@ -164,7 +166,7 @@ const Product = () => {
 
               <TextField
                 className={classes.textfieldDescription}
-                defaultValue={datos.description}
+                defaultValue={productData.description}
                 multiline
                 label="Descripcion"
                 name="description"
@@ -178,12 +180,14 @@ const Product = () => {
             <div className={classes.contentInfo}>
               <div className={classes.contentInfoTitle}>
                 <Typography variant="h4" className={classes.contentInfoName}>
-                  {datos.name}
+                  {productData.name}
                 </Typography>
-                <Typography variant="h6">{datos.categoria}</Typography>
+                <Typography variant="h6">{productData.category}</Typography>
               </div>
-              <Typography>${datos.precio} </Typography>
-              <Typography component="body2">{datos.description}</Typography>
+              <Typography>${productData.price} </Typography>
+              <Typography component="body2">
+                {productData.description}
+              </Typography>
             </div>
           )}
 
@@ -201,6 +205,7 @@ const Product = () => {
               variant="outlined"
               className={classes.button}
               onClick={() => {
+                createProduct(productData);
                 setEdit(!edit);
               }}
             >

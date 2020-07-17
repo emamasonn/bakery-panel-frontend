@@ -3,6 +3,7 @@ import { makeStyles } from "@material-ui/core/styles";
 import Toolbar from "@material-ui/core/Toolbar";
 import Product from "./Product";
 import TableProducts from "./TableProducts";
+import TableProducts2 from "./TableProducts2";
 import Button from "@material-ui/core/Button";
 import { Typography } from "@material-ui/core";
 import InputBase from "@material-ui/core/InputBase";
@@ -60,12 +61,23 @@ const useStyles = makeStyles((theme) => ({
 
 function Products() {
   const classes = useStyles();
+  const [newProduct, setNewProduct] = useState({});
   const [show, setShow] = useState([
     { id: new Date().getTime() / 1000, num: 0 },
   ]);
+
+  const createNewProduct = (productDetails) => {
+    setNewProduct(productDetails);
+  };
+
   const add = () => {
     setShow([...show, { id: new Date().getTime() / 1000, num: show.length }]);
   };
+
+  // En el useEffect (componentDidMount) pegarle a la api con una funcion async await
+  // y usas mapDIspatchToProps para dispachar una action de Redux y guardar la
+  // data en el store. Luego usas mapStateToProps y te traes la data del store y la
+  // pasas al componente TableProducts.
 
   return (
     <div className={classes.content}>
@@ -100,11 +112,14 @@ function Products() {
       </div>
       <div className={classes.product}>
         {show.map((form, index) => (
-          <Product key={index} />
+          <Product key={index} createProduct={createNewProduct} />
         ))}
       </div>
+      {/* <div className={classes.table}>
+        <TableProducts newProduct={newProduct} />
+      </div> */}
       <div className={classes.table}>
-        <TableProducts />
+        <TableProducts2 newProduct={newProduct} />
       </div>
     </div>
   );
