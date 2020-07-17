@@ -7,6 +7,8 @@ import Navegation from "../components/Navegation/Navegation";
 import Grid from "@material-ui/core/Grid";
 import ListLink from "../components/Navegation/ListLink";
 import Hidden from "@material-ui/core/Hidden";
+import Orders from "../components/orders/Orders";
+import Images from "../components/images/Images";
 import Account from "../components/account/Account";
 import Products from "../components/Products/Products";
 
@@ -22,11 +24,13 @@ export default function Router() {
             <ListLink />
           </Grid>
         </Hidden>
-        <Grid item xs={12} sm={10} md={10} xl={10} lg={10}>
+        <Grid item xs={12} sm={12} md={10} xl={10} lg={10}>
           <Switch>
             <Route exact path="/" component={Login} />
             <Route exact path="/Category" component={Category} />
             <Route exact path="/Settings" component={Settings} />
+            <Route exact path="/Orders" component={Orders} />
+            <Route exact path="/Images" component={Images} />
             <Route exact path="/Account" component={Account} />
             <Route exact path="/Products" component={Products} />
           </Switch>

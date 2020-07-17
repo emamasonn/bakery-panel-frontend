@@ -1,0 +1,1 @@
+export const TEST_VARS_IMAGES = 'TEST_VARS_IMAGES';
