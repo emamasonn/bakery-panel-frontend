@@ -1,127 +1,149 @@
-import React, { useState } from "react";
-import { makeStyles } from "@material-ui/core/styles";
-import Toolbar from "@material-ui/core/Toolbar";
-import Product from "./Product";
-import TableProducts from "./TableProducts";
-import TableProducts2 from "./TableProducts2";
-import Button from "@material-ui/core/Button";
-import { Typography } from "@material-ui/core";
-import InputBase from "@material-ui/core/InputBase";
-import Paper from "@material-ui/core/Paper";
-import IconButton from "@material-ui/core/IconButton";
-import SearchIcon from "@material-ui/icons/Search";
-import AddIcon from "@material-ui/icons/Add";
+import React, { useState, useEffect } from 'react';
+import { makeStyles } from '@material-ui/core/styles';
+import Table from '@material-ui/core/Table';
+import TableCell from '@material-ui/core/TableCell';
+import TableHead from '@material-ui/core/TableHead';
+import TableRow from '@material-ui/core/TableRow';
+import ProductRow from './ProductRow';
+import Toolbar from '@material-ui/core/Toolbar';
+import Typography from '@material-ui/core/Typography';
+import Button from '@material-ui/core/Button';
+import AddIcon from '@material-ui/icons/Add';
+import Box from '@material-ui/core/Box';
+import Hidden from '@material-ui/core/Hidden';
+import TableBody from '@material-ui/core/TableBody';
+import { Link } from "react-router-dom";
+import axios from 'axios';
+import { connect } from 'react-redux';
+//import { loadOrdersAction } from '../../redux/actions/orderAction'
 
 const useStyles = makeStyles((theme) => ({
-  content: {
-    marginTop: 20,
-  },
-  iconButton: {
-    marginRight: 7,
-  },
-  title: {
-    marginBottom: 10,
-    fontSize: 40,
-    fontFamily: "Dancing Script, cursive",
-    display: "flex",
-    justifyContent: "center",
-    color: "#ad172b",
-  },
-  paperRoot: {
-    display: "flex",
-    justifyContent: "space-around",
-    width: 280,
-    backgroundColor: "#F4F6F8",
-  },
-  inputSearch: {
-    marginLeft: theme.spacing(1),
-  },
-  topControls: {
-    display: "flex",
-    justifyContent: "space-between",
-    padding: theme.spacing(2),
-  },
-  addButton: {
-    "@media (max-width:600px)": {
-      margin: theme.spacing(0.5),
+    content: {
+        margin: '150px 50px',
+        '@media (max-width:600px)': {
+            margin: '100px 10px',
+        }
     },
-  },
-  listPaper: {
-    backgroundColor: "#F4F6F8",
-  },
-  product: {
-    display: "flex",
-    justifyContent: "center",
-    flexDirection: "column",
-  },
-  table: {
-    marginTop: theme.spacing(10),
-  },
+    title:{
+        //fontSize: 40,
+        fontFamily: "Dancing Script, cursive",
+        display: 'flex',
+        justifyContent: 'center',
+        color: "black",
+    },
+    table: {
+        marginBottom: 10,
+        /*'& .MuiTableCell-sizeSmall': {
+            padding: '6px 16px 6px 16px',
+        }*/
+    },
+    boxTable:{
+        display:"flex",
+        width: "100%",
+    }
 }));
 
-function Products() {
-  const classes = useStyles();
-  const [newProduct, setNewProduct] = useState({});
-  const [show, setShow] = useState([
-    { id: new Date().getTime() / 1000, num: 0 },
-  ]);
+const Products = () => {
+  const classes = useStyles();                            
 
-  const createNewProduct = (productDetails) => {
-    setNewProduct(productDetails);
-  };
+  /*useEffect(() => {
+    axios.get(`${ process.env.REACT_APP_URL_LOCAL }/order`)
+        .then((resp) => {
+            console.log(resp)
+            let orders = resp.data.order
+            loadOrdersAction(orders)
+        })
+        .catch((error) => {
+            console.log(error)
+        })
+  }, [])*/
 
-  const add = () => {
-    setShow([...show, { id: new Date().getTime() / 1000, num: show.length }]);
-  };
-
-  // En el useEffect (componentDidMount) pegarle a la api con una funcion async await
-  // y usas mapDIspatchToProps para dispachar una action de Redux y guardar la
-  // data en el store. Luego usas mapStateToProps y te traes la data del store y la
-  // pasas al componente TableProducts.
+  const products = [
+    {
+        "available": true,
+        "_id": "5ef7b686a22677081852972e",
+        "name": "Barra para desayunar",
+        "priceUni": 300,
+        "description": "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s",
+        "category": "Desayunos",
+        "img": {
+            "_id": "5ef7b2b1263b521c88579d50",
+            "name": "CanonesRellenos.jpg"
+        },
+        "__v": 0
+    },
+    {
+        "available": true,
+        "_id": "5ef7b6d0a22677081852972f",
+        "name": "Cañones rellenos con algo",
+        "priceUni": 600,
+        "description": "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s",
+        "category": "Dulces",
+        "img": {
+            "_id": "5ef7b2b1263b521c88579d50",
+            "name": "CanonesRellenos.jpg"
+        },
+        "__v": 0
+    },
+    {
+        "available": true,
+        "_id": "5ef7c191a226770818529730",
+        "name": "Buccellato lo mejor",
+        "priceUni": 1000,
+        "description": "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s",
+        "category": "Otros",
+        "img": {
+            "_id": "5ef7b32020c5eb10d4158e83",
+            "name": "TodoDulceconpasas.jpg"
+        },
+        "__v": 0
+    }
+]
 
   return (
     <div className={classes.content}>
-      <Toolbar />
-      <Typography className={classes.title}>Productos</Typography>
-      <div className={classes.topControls}>
-        <Paper component="form" className={classes.paperRoot}>
-          <InputBase
-            className={classes.inputSearch}
-            placeholder="Buscar un producto"
-            inputProps={{ "aria-label": "Buscar un producto" }}
-          />
-          <IconButton
-            type="submit"
-            className={classes.iconButton}
-            aria-label="search"
-          >
-            <SearchIcon />
-          </IconButton>
-        </Paper>
-        <Button
-          className={classes.addButton}
-          size="large"
-          type="submit"
-          variant="outlined"
-          color="primary"
-          onClick={() => add()}
-        >
-          {" "}
-          <AddIcon />
-        </Button>
-      </div>
-      <div className={classes.product}>
-        {show.map((form, index) => (
-          <Product key={index} createProduct={createNewProduct} />
-        ))}
-      </div>
-      {/* <div className={classes.table}>
-        <TableProducts newProduct={newProduct} />
-      </div> */}
-      <div className={classes.table}>
-        <TableProducts2 newProduct={newProduct} />
-      </div>
+        <Typography variant='h4' className={classes.title}>Productos</Typography>
+        <div>
+            <Box align="right">
+                <Link to='/ProductNew'>
+                    <Button size="small" variant="outlined" color="primary">
+                        <AddIcon/>
+                    </Button>
+                </Link>
+            </Box>
+            <Box align='center' className={classes.boxTable}>
+                <Table size="small" className={classes.table} aria-label="simple table">
+                    <TableHead>
+                        <TableRow>
+                            <TableCell></TableCell>
+                            <TableCell>Nombre</TableCell>
+                            <TableCell>Categoria</TableCell>
+                            <TableCell>Precio</TableCell>
+                            <TableCell></TableCell>
+                        </TableRow>
+                    </TableHead>
+                    <TableBody>
+                        {
+                            products.map((data, index) => (
+                                <ProductRow key={index} product={data} />
+                            ))
+                        }
+                    </TableBody>
+                </Table>
+            </Box>
+        </div>
     </div>
   );
 }
-export default Products;
+
+/*const mapStateToProps = state => ({
+    orders: state.ordersReducer.orders
+})
+  
+const mapDispatchToProps = dispatch => ({
+    loadOrdersAction: (data) => {
+      dispatch(loadOrdersAction(data))
+    },
+})*/
+
+export default /*connect( mapStateToProps, mapDispatchToProps )*/(Products);
