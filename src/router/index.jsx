@@ -10,6 +10,8 @@ import Hidden from '@material-ui/core/Hidden';
 import Orders from '../components/orders/Orders';
 import Images from '../components/images/Images';
 import Account from '../components/account/Account';
+import OrderNew from '../components/orders/OrderNew'
+import OrderEdit from '../components/orders/OrderEdit'
 
 export default function Router() {
   return (
@@ -31,6 +33,8 @@ export default function Router() {
               <Route exact path='/Settings' component={Settings}/>
               <Route exact path='/Orders' component={Orders}/>
               <Route exact path='/Images' component={Images}/>
+              <Route exact path='/OrderNew' component={OrderNew}/>
+              <Route exact path='/OrderEdit' component={OrderEdit}/>
             </Switch>
         </Grid>
       </Grid>
