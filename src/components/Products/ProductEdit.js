@@ -6,13 +6,10 @@ import Typography from '@material-ui/core/Typography';
 import Container from '@material-ui/core/Container';
 import Paper from '@material-ui/core/Paper';
 import { connect } from 'react-redux';
-//import { loadAllProductsAction, loadProductsOrderAction } from '../../redux/actions/orderAction'
+import { editProductsAction } from '../../redux/actions/productsAction'
 import { useHistory } from 'react-router-dom';
 import axios from 'axios';
-import Select from '@material-ui/core/Select';
 import MenuItem from '@material-ui/core/MenuItem';
-import FormControl from '@material-ui/core/FormControl';
-import InputLabel from '@material-ui/core/InputLabel';
 //import ModalOrder from './ModalOrder'
 
 const useStyles = makeStyles(({  
@@ -155,15 +152,37 @@ const useStyles = makeStyles(({
       },
 }));
 
-const ProductEdit = ({ loadAllProductsAction, orderProducts, loadProductsOrderAction })=> {
+const ProductEdit = ({ editDataProduct, editProductsAction })=> {
     const history = useHistory()
     const classes = useStyles();
-    const [name, setName] = useState();
-    const [ priceUni, setPriceUni ] = useState();
-    const [ category, setCategory ] = useState();
-    const [ image, setImage ] = useState();
-    const [ description, setDescription ] = useState();
+    const [name, setName] = useState(editDataProduct.name);
+    const [ priceUni, setPriceUni ] = useState(editDataProduct.priceUni);
+    const [ category, setCategory ] = useState(editDataProduct.category);
+    const [ image, setImage ] = useState(editDataProduct.img._id);
+    const [ description, setDescription ] = useState(editDataProduct.description);
+    const [ categories, setCategories ] = useState([])
+    const [ images, setImages ] = useState([])
     //const [modalOrder, setModalOrder] = useState({open: false, error: false});
+
+    useEffect(() => {
+        axios.get(`${ process.env.REACT_APP_URL_LOCAL }/category`)
+            .then((resp) => {
+                let categories = resp.data.categories
+                setCategories(categories)
+            })
+            .catch((error) => {
+                console.log(error)
+            })
+
+        axios.get(`${ process.env.REACT_APP_URL_LOCAL }/imagen/product`)
+            .then((resp) => {
+                let images = resp.data.images
+                setImages(images)
+            })
+            .catch((error) => {
+                console.log(error)
+            })
+    }, [])
 
     const handleChangeName = (event) => {
         let name = event.target.value
@@ -190,33 +209,38 @@ const ProductEdit = ({ loadAllProductsAction, orderProducts, loadProductsOrderAc
         setDescription(description)
     }
 
-    /*const sendOrderApi = (data) => {
-        axios.post(`${ process.env.REACT_APP_URL_LOCAL }/order`, data)
+    const editProductApi = (data) => {
+        axios.put(`${ process.env.REACT_APP_URL_LOCAL }/product/${ editDataProduct._id }`, data)
         .then( (resp) => {
-            console.log(resp)
             /*setModalOrder({open: true, error: false})
             document.getElementById('id-form-order').reset()
             setTimeout(() => {
                 setModalOrder({open: false, error: false})
-            }, 2000)
+            }, 2000)*/
         })
         .catch( (error) => {
             console.log(error)
             /*setModalOrder({open: true, error: true})
             setTimeout(() => {
                 setModalOrder({open: false, error: true})
-            }, 2000)
+            }, 2000)*/
         })
-    }*/
+    }
 
     const handleSubmitProduct = async (event) => {
-        /*event.preventDefault()
+        event.preventDefault()
 
         const data = {
-            name,
-        }*/
-        //await sendOrderApi(data)
-        //history.push('/Orders')
+            name, 
+            priceUni, 
+            category,
+            img: image,
+            description,
+        }
+
+        editProductsAction(data)
+        await editProductApi(data)
+        history.push('/Products')
     }
 
     /*const handleCloseModalOrder = () => {
@@ -225,12 +249,13 @@ const ProductEdit = ({ loadAllProductsAction, orderProducts, loadProductsOrderAc
 
     return (
     <Container maxWidth='lg' className={classes.containerForm}>
-        <Typography variant='h4' className={classes.titleNewOrder}>Nuevo Producto</Typography>
+        <Typography variant='h4' className={classes.titleNewOrder}>Editar Producto</Typography>
         <Paper elevation={0} >
         <Typography variant='h6' className={classes.titleFormOrder}>Datos del Producto</Typography>
         <form onSubmit={handleSubmitProduct} id='id-form-product'>
             <div>                         
                 <TextField 
+                    defaultValue={name}
                     onChange={handleChangeName}
                     className={classes.textFile} 
                     label="Nombre" 
@@ -239,6 +264,7 @@ const ProductEdit = ({ loadAllProductsAction, orderProducts, loadProductsOrderAc
                     required 
                 />
                 <TextField
+                    defaultValue={priceUni}
                     onChange={handleChangePriceUni} 
                     className={classes.textFile} 
                     label="Precio"
@@ -256,8 +282,11 @@ const ProductEdit = ({ loadAllProductsAction, orderProducts, loadProductsOrderAc
                 variant="outlined" 
                 className={classes.textFile}
             >
-                <MenuItem value="10">Ten</MenuItem>
-                <MenuItem value="20">Twenty</MenuItem>
+                {
+                    categories.map((category, index) => (
+                        <MenuItem value={category.name} key={index}>{category.name}</MenuItem>
+                    ))
+                }
             </TextField>
             <TextField  
                 value={image} 
@@ -269,12 +298,16 @@ const ProductEdit = ({ loadAllProductsAction, orderProducts, loadProductsOrderAc
                 variant="outlined" 
                 className={classes.textFile}
             >
-                <MenuItem value="10">Ten</MenuItem>
-                <MenuItem value="20">Twenty</MenuItem>
+                {
+                    images.map((image, index) => (
+                        <MenuItem value={image._id} key={index}>{image.name}</MenuItem>
+                    ))
+                }
             </TextField>
             </div>
             <div>
             <TextField
+                defaultValue={description}
                 onChange={handleChangeDescription}
                 className={classes.textFileDescription}
                 label="Descripcion"
@@ -285,7 +318,7 @@ const ProductEdit = ({ loadAllProductsAction, orderProducts, loadProductsOrderAc
                 required
             />
             </div>
-            <Button type='submit' className={classes.button} variant="contained">Cargar Producto</Button>
+            <Button type='submit' className={classes.button} variant="contained">Editar Producto</Button>
         </form>
         </Paper>
         {/*<ModalOrder modalState={modalOrder} handleClose={handleCloseModalOrder}/>*/}
@@ -294,17 +327,14 @@ const ProductEdit = ({ loadAllProductsAction, orderProducts, loadProductsOrderAc
 };
 
 
-/*const mapDispatchToProps = dispatch => ({
-    loadAllProductsAction: (data) => {
-        dispatch(loadAllProductsAction(data))
-    },
-    loadProductsOrderAction: (data) => {
-        dispatch(loadProductsOrderAction(data))
+const mapDispatchToProps = dispatch => ({
+    editProductsAction: (data) => {
+        dispatch(editProductsAction(data))
     },
 })
 
 const mapStateToProps = state => ({
-    orderProducts: state.ordersReducer.orderProducts,
-})*/
+    editDataProduct: state.productsReducer.editDataProduct,
+})
 
-export default /*connect( mapStateToProps, mapDispatchToProps )*/(ProductEdit);
+export default connect( mapStateToProps, mapDispatchToProps )(ProductEdit);
