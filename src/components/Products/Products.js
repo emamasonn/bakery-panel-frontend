@@ -5,17 +5,16 @@ import TableCell from '@material-ui/core/TableCell';
 import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import ProductRow from './ProductRow';
-import Toolbar from '@material-ui/core/Toolbar';
+import Pagination from '@material-ui/lab/Pagination';
 import Typography from '@material-ui/core/Typography';
 import Button from '@material-ui/core/Button';
 import AddIcon from '@material-ui/icons/Add';
 import Box from '@material-ui/core/Box';
-import Hidden from '@material-ui/core/Hidden';
 import TableBody from '@material-ui/core/TableBody';
 import { Link } from "react-router-dom";
 import axios from 'axios';
 import { connect } from 'react-redux';
-//import { loadOrdersAction } from '../../redux/actions/orderAction'
+import { loadListProductsAction } from '../../redux/actions/productsAction';
 
 const useStyles = makeStyles((theme) => ({
     content: {
@@ -40,65 +39,55 @@ const useStyles = makeStyles((theme) => ({
     boxTable:{
         display:"flex",
         width: "100%",
+    },
+    contentPagination: {
+        display: 'flex',
+        justifyContent: 'center',
+        marginTop: 20,
     }
 }));
 
-const Products = () => {
-  const classes = useStyles();                            
+const Products = ({ loadListProductsAction, listProducts }) => {
+    const classes = useStyles(); 
+    const [page, setPage] = useState(1);
+    const [qualityPage, setQualityPage] = useState(1);
 
-  /*useEffect(() => {
-    axios.get(`${ process.env.REACT_APP_URL_LOCAL }/order`)
+    const handleChangePagination = (event, value) => {
+        setPage(value);
+    };                           
+
+  useEffect(() => {
+    axios.get(`${ process.env.REACT_APP_URL_LOCAL }/product/all/0/3`)
         .then((resp) => {
-            console.log(resp)
-            let orders = resp.data.order
-            loadOrdersAction(orders)
+            let totalPage = (resp.data.cuanto / 3)
+                let val = Math.trunc(totalPage)
+                if(totalPage - val > 0){
+                    val = val + 1
+                }
+            setQualityPage(val)
+            let products = resp.data.product
+            loadListProductsAction(products)
         })
         .catch((error) => {
             console.log(error)
         })
-  }, [])*/
+  }, [])
 
-  const products = [
-    {
-        "available": true,
-        "_id": "5ef7b686a22677081852972e",
-        "name": "Barra para desayunar",
-        "priceUni": 300,
-        "description": "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s",
-        "category": "Desayunos",
-        "img": {
-            "_id": "5ef7b2b1263b521c88579d50",
-            "name": "CanonesRellenos.jpg"
-        },
-        "__v": 0
-    },
-    {
-        "available": true,
-        "_id": "5ef7b6d0a22677081852972f",
-        "name": "Cañones rellenos con algo",
-        "priceUni": 600,
-        "description": "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s",
-        "category": "Dulces",
-        "img": {
-            "_id": "5ef7b2b1263b521c88579d50",
-            "name": "CanonesRellenos.jpg"
-        },
-        "__v": 0
-    },
-    {
-        "available": true,
-        "_id": "5ef7c191a226770818529730",
-        "name": "Buccellato lo mejor",
-        "priceUni": 1000,
-        "description": "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s",
-        "category": "Otros",
-        "img": {
-            "_id": "5ef7b32020c5eb10d4158e83",
-            "name": "TodoDulceconpasas.jpg"
-        },
-        "__v": 0
+  useEffect(() => {
+    let beginPage = 0
+    let endPage = 3
+    for(let i=1; i<page; i++){
+        beginPage += 3
     }
-]
+    axios.get(`${ process.env.REACT_APP_URL_LOCAL }/product/all/${ beginPage }/${ endPage }`)
+        .then( (resp) => {
+            let products = resp.data.product
+            loadListProductsAction(products)
+        })
+        .catch( (error) => {
+            console.log(error)
+        })
+    }, [page]);
 
   return (
     <div className={classes.content}>
@@ -124,26 +113,29 @@ const Products = () => {
                     </TableHead>
                     <TableBody>
                         {
-                            products.map((data, index) => (
-                                <ProductRow key={index} product={data} />
+                            listProducts.map((data, index) => (
+                                <ProductRow key={index} product={data}/>
                             ))
                         }
                     </TableBody>
                 </Table>
             </Box>
         </div>
+        <div className={classes.contentPagination}>
+            <Pagination size="small" count={qualityPage} page={page} onChange={handleChangePagination}/>
+        </div>
     </div>
   );
 }
 
-/*const mapStateToProps = state => ({
-    orders: state.ordersReducer.orders
+const mapStateToProps = state => ({
+    listProducts: state.productsReducer.listProducts
 })
   
 const mapDispatchToProps = dispatch => ({
-    loadOrdersAction: (data) => {
-      dispatch(loadOrdersAction(data))
+    loadListProductsAction: (data) => {
+      dispatch(loadListProductsAction(data))
     },
-})*/
+})
 
-export default /*connect( mapStateToProps, mapDispatchToProps )*/(Products);
+export default connect( mapStateToProps, mapDispatchToProps )(Products);

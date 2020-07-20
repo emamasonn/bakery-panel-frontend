@@ -1,4 +1,4 @@
-import React,{ useState } from 'react'
+import React, { useState } from 'react'
 import {makeStyles} from '@material-ui/core/styles';
 import TableCell from '@material-ui/core/TableCell';
 import TableRow from '@material-ui/core/TableRow';
@@ -6,14 +6,12 @@ import CreateIcon from '@material-ui/icons/Create';
 import DeleteOutlinedIcon from '@material-ui/icons/DeleteOutlined';
 import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
-import Box from '@material-ui/core/Box';
-import Hidden from '@material-ui/core/Hidden';
 import Collapse from '@material-ui/core/Collapse';
 import ListIcon from '@material-ui/icons/List';
 import ButtonGroup from '@material-ui/core/ButtonGroup';
 import { Link } from "react-router-dom";
 import { connect } from 'react-redux';
-//import { loadEditOrderAction, loadProductsOrderAction, deleteOrderAction } from '../../redux/actions/orderAction'
+import { editDataProductsAction, deleteProductsAction } from '../../redux/actions/productsAction'
 import axios from 'axios'
 import imagen from '../../assets/logodos.png'
 
@@ -119,24 +117,24 @@ const useStyles = makeStyles((theme) => ({
     }
 }));
 
-const ProductRow = ({ product }) => {
+const ProductRow = ({ product, editDataProductsAction, deleteProductsAction }) => {
     const classes = useStyles();
     const [ openDescription, setOpenDescription ] = useState(false);
     const { _id, name, priceUni, description, category, img, available } = product
     
     const handleEditProduct = () => {
-        /*loadEditOrderAction(order)
-        loadProductsOrderAction(products)*/
+        editDataProductsAction(product)
     }
-
+    
     const handleDeleteProduct = () => {
-        /*axios.delete(`${ process.env.REACT_APP_URL_LOCAL }/order/delete/${ _id }`)
+        axios.delete(`${ process.env.REACT_APP_URL_LOCAL }/product/${ _id }`)
             .then((resp)=>{
-                deleteOrderAction(_id)
+                deleteProductsAction(_id)
+                document.location.reload()
             })
             .catch((error)=>{
                 console.log(error)
-            })*/
+            })
     }
 
 return (
@@ -176,17 +174,14 @@ return (
     )
 }
 
-/*const mapDispatchToProps = dispatch => ({
-    loadEditOrderAction: (data) => {
-      dispatch(loadEditOrderAction(data))
+const mapDispatchToProps = dispatch => ({
+    editDataProductsAction: (data) => {
+      dispatch(editDataProductsAction(data))
     },
-    loadProductsOrderAction: (data) => {
-        dispatch(loadProductsOrderAction(data))
+    deleteProductsAction: (id) => {
+        dispatch(deleteProductsAction(id))
     },
-    deleteOrderAction: (id) => {
-        dispatch(deleteOrderAction(id))
-    },
-})*/
+})
 
-export default /*connect( null, mapDispatchToProps )*/(ProductRow);
+export default connect( null, mapDispatchToProps )(ProductRow);
 
