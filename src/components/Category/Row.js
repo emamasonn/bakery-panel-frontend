@@ -7,6 +7,9 @@ import Typography from '@material-ui/core/Typography';
 import CreateIcon from '@material-ui/icons/Create';
 import TextField from '@material-ui/core/TextField';
 import CheckIcon from '@material-ui/icons/Check';
+import axios from 'axios';
+import {deleteCategoryAction, } from '../../redux/actions/categoriesAction'
+import { connect } from 'react-redux';
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -70,21 +73,34 @@ const useStyles = makeStyles((theme) => ({
     }
 }));
 
-const Table = ({id, handleRemove}) => {
-    const classes = useStyles();
-    const [datos, setDatos] = useState({
-                                        name: '',
-                                        description:'',
-                                      });
+const Row = ({cate, deleteCategoryAction}) => {
 
-    const [edit, setEdit] = useState(true);
+    const classes = useStyles();
+
+    const {_id, name, description} = cate
+
+    const [datos, setDatos] = useState({
+        name: name,
+        description: description,
+    });
+    const [edit, setEdit] = useState(false);
 
     const handleInputChange = (event) => {
-    setDatos({...datos, [event.target.name] : event.target.value})
-    };
-      
-    return (
 
+        setDatos({...datos, [event.target.name] : event.target.value})
+
+    };
+    //delete
+    const handleRemove = (_id) => {
+        axios.delete(`http://localhost:3000/category/${_id}`)
+            .then(res => {
+            console.log(res);
+            console.log(res.data);
+        })
+        deleteCategoryAction(_id)
+    };
+
+    return (
     <div> 
         <Paper className={classes.root}>
             {edit ? ( 
@@ -117,13 +133,11 @@ const Table = ({id, handleRemove}) => {
                     </Typography>
                 </div>
             )}
-            
             <div className={classes.contentButton}>
                 <Button 
                     variant="outlined"
                     className={classes.button}
-                    onClick={() => {handleRemove(id);}}
-                > 
+                    onClick={() => {handleRemove(_id)}}> 
                     <DeleteOutlinedIcon className={classes.deleteIcon}/> 
                 </Button>
                 <Button 
@@ -131,8 +145,7 @@ const Table = ({id, handleRemove}) => {
                     className={classes.button}
                     onClick={() => {
                     setEdit(!edit);
-                    }}
-                > 
+                    }}> 
                     {edit ? (<CheckIcon className={classes.checkIcon}/>) 
                             :
                             (<CreateIcon className={classes.editIcon}/>)} 
@@ -142,4 +155,11 @@ const Table = ({id, handleRemove}) => {
     </div>
     )
 }
-export default Table;
+
+const mapDispatchToProps = dispatch => ({
+    deleteCategoryAction: (id) => {
+      dispatch(deleteCategoryAction(id))
+    },
+  })
+  
+export default connect(null, mapDispatchToProps )( Row);

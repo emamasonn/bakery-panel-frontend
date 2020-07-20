@@ -1,9 +1,30 @@
-import { TEST_VARS_CATEGORIES } from '../types/categoriesTypes'
+import {LOAD_CATEGORIES, EDIT_CATEGORY, DELETE_CATEGORY, ADD_CATEGORY} from '../types/categoriesTypes'
 
 
-export const testAction = () => {
+export const loadCategories = (data) => {
     return {
-        type: TEST_VARS_CATEGORIES,
-        payload: 'TEST_VARS_CATEGORIES'
+        type: LOAD_CATEGORIES,
+        payload: data,
+    }
+}
+
+export const addCategoryAction = (data) => {
+    return {
+        type: ADD_CATEGORY,
+        payload: data,
+    }
+}
+
+export const deleteCategoryAction = (id) => {
+    return {
+        type: DELETE_CATEGORY,
+        payload: id,
+    }
+}
+
+export const editCategoryAction = (data) => {
+    return {
+        type: EDIT_CATEGORY,
+        payload: data,
     }
 }

@@ -1,12 +1,25 @@
-import { TEST_VARS_CATEGORIES } from '../types/categoriesTypes' 
+import { LOAD_CATEGORIES,  ADD_CATEGORY, EDIT_CATEGORY, DELETE_CATEGORY  } from '../types/categoriesTypes' 
 
-const initialState = {}//Hay que cambiarlo dependiendo el estado inicial
+const initialState = {
+    categories: [],
+}
 
-export default function (state = initialState, action){
+ const categoriesReducer = (state = initialState, action) =>{
     switch(action.type){
-        case TEST_VARS_CATEGORIES:
+        case LOAD_CATEGORIES: 
+            let categories = action.payload
+            return {...state, categories: [...state.categories, ...categories]}
+        case ADD_CATEGORY:
+            
             return state
+        case DELETE_CATEGORY:
+            let id = action.payload 
+            return {...state, categories: state.categories.filter((category) => category._id !== id)}
+        case EDIT_CATEGORY:
+
+              return state 
         default:
             return state;
     }
 }
+export default categoriesReducer;
