@@ -15,6 +15,7 @@ import OrderEdit from '../components/orders/OrderEdit'
 import Products from "../components/Products/Products";
 import ProductNew from "../components/Products/ProductNew";
 import ProductEdit from "../components/Products/ProductEdit";
+import Messages from "../components/messages/Messages";
 
 export default function Router() {
   return (
@@ -41,6 +42,7 @@ export default function Router() {
               <Route exact path="/Products" component={Products} />
               <Route exact path='/ProductNew' component={ProductNew}/>
               <Route exact path='/ProductEdit' component={ProductEdit}/>
+              <Route exact path='/Messages' component={Messages}/>
             </Switch>
         </Grid>
       </Grid>

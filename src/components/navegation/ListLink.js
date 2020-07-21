@@ -14,6 +14,7 @@ import ImageIcon from '@material-ui/icons/Image';
 import CategoryIcon from '@material-ui/icons/Category';
 import Toolbar from '@material-ui/core/Toolbar';
 import MarkunreadMailboxIcon from '@material-ui/icons/MarkunreadMailbox';
+import ChatBubbleIcon from '@material-ui/icons/ChatBubble';
 
 const useStyles = makeStyles((theme) => ({
   listItem: {
@@ -98,6 +99,18 @@ const ListLink = () => {
                         </ListItemIcon>
                         <ListItemText>
                             <Typography variant="body1" >Pedidos
+                            </Typography> 
+                        </ListItemText>
+                    </ListItem>
+                </Link>
+                <Divider />
+                <Link to="/Messages" className={classes.text}>
+                    <ListItem button key="/Message" className={classes.listItem}>
+                        <ListItemIcon>
+                            <ChatBubbleIcon/>
+                        </ListItemIcon>
+                        <ListItemText>
+                            <Typography variant="body1" >Mensajes
                             </Typography> 
                         </ListItemText>
                     </ListItem>
