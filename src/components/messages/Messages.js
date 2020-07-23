@@ -15,7 +15,7 @@ import TableBody from '@material-ui/core/TableBody';
 import { Link } from "react-router-dom";
 import axios from 'axios';
 import { connect } from 'react-redux';
-//import { loadOrdersAction } from '../../redux/actions/orderAction'
+import { loadMessagesAction } from '../../redux/actions/messagesAction'
 
 const useStyles = makeStyles((theme) => ({
     content: {
@@ -43,53 +43,21 @@ const useStyles = makeStyles((theme) => ({
     }
 }));
 
-const Messages = ({ loadOrdersAction, orders }) => {
-  const classes = useStyles();                            
+const Messages = ({ loadMessagesAction, messages }) => {
+  const classes = useStyles();
+  const [reload, setReload] = useState(false)                            
 
-  /*useEffect(() => {
-    axios.get(`${ process.env.REACT_APP_URL_LOCAL }/order`)
+  useEffect(() => {
+    axios.get(`${ process.env.REACT_APP_URL_LOCAL }/message`)
         .then((resp) => {
             console.log(resp)
-            let orders = resp.data.order
-            loadOrdersAction(orders)
+            let messages = resp.data.messages
+            loadMessagesAction(messages)
         })
         .catch((error) => {
             console.log(error)
         })
-  }, [])*/
-
-  const messages = [
-    {
-        "answered": true,
-        "_id": "5f073d876e44cf23d076c349",
-        "name": "Carlos",
-        "lastName": "Mason",
-        "email": "ema@gmail.com",
-        "telephone": "2217788991",
-        "message": "este es el mensaje",
-        "__v": 0
-    },
-    {
-        "answered": false,
-        "_id": "5f073dac6e44cf23d076c34a",
-        "name": "Carlos",
-        "lastName": "Mason",
-        "email": "ema@gmail.com",
-        "telephone": "2217788991",
-        "message": "este es el mensaje",
-        "__v": 0
-    },
-    {
-        "answered": false,
-        "_id": "5f075567b11ab423e806fe83",
-        "name": "Carlos",
-        "lastName": "Mason",
-        "email": "emamasonn@gmail.com",
-        "telephone": "2217788991",
-        "message": "Buenas! \n\nNecesitaria hacer una consulta de si sihuen haciendo pasteles de ricota.\n\nGracias.\nSaludos, David!",
-        "__v": 0
-    },
-  ]
+  }, [reload])
 
   return (
     <div className={classes.content}>
@@ -106,7 +74,7 @@ const Messages = ({ loadOrdersAction, orders }) => {
                     <TableBody>
                         {
                             messages.map((data, index) => (
-                                <MessageRow key={index} messageData={data} />
+                                <MessageRow key={index} messageData={data} setReload={setReload} reload={reload}/>
                             ))
                         }
                     </TableBody>
@@ -116,14 +84,14 @@ const Messages = ({ loadOrdersAction, orders }) => {
   );
 }
 
-/*const mapStateToProps = state => ({
-    orders: state.ordersReducer.orders
+const mapStateToProps = state => ({
+    messages: state.messagesReducer.messages
 })
   
 const mapDispatchToProps = dispatch => ({
-    loadOrdersAction: (data) => {
-      dispatch(loadOrdersAction(data))
+    loadMessagesAction: (data) => {
+      dispatch(loadMessagesAction(data))
     },
-})*/
+})
 
-export default /*connect( mapStateToProps, mapDispatchToProps )*/(Messages);
+export default connect( mapStateToProps, mapDispatchToProps )(Messages);

@@ -1,9 +1,16 @@
-import { TEST_VARS_MESSAGE } from '../types/messageTypes'
+import { LOAD_MESSAGES, DELETE_MESSAGE } from '../types/messageTypes'
 
 
-export const testAction = () => {
+export const loadMessagesAction = (data) => {
     return {
-        type: TEST_VARS_MESSAGE,
-        payload: 'TEST_VARS_MESSAGE'
+        type: LOAD_MESSAGES,
+        payload: data
+    }
+}
+
+export const deleteMessageAction = (id) => {
+    return {
+        type: DELETE_MESSAGE,
+        payload: id
     }
 }
