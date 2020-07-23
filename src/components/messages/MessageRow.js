@@ -13,7 +13,7 @@ import ListIcon from '@material-ui/icons/List';
 import ButtonGroup from '@material-ui/core/ButtonGroup';
 import { Link } from "react-router-dom";
 import { connect } from 'react-redux';
-//import { loadEditOrderAction, loadProductsOrderAction, deleteOrderAction } from '../../redux/actions/orderAction'
+import { deleteMessageAction } from '../../redux/actions/messagesAction'
 import axios from 'axios'
 import MessageIcon from '@material-ui/icons/Message';
 import Switch from '@material-ui/core/Switch';
@@ -117,26 +117,26 @@ const useStyles = makeStyles((theme) => ({
     }
 }));
 
-const MessageRow = ({ messageData }) => {
+const MessageRow = ({ messageData, reload, setReload }) => {
     const classes = useStyles();
     const [ openInformation, setOpenInformation ] = useState(false);
     const [ stateMessage, setStateMessage] = useState(false)
     const { _id, name, lastName, email, telephone, message} = messageData
     
     const handleChange = () => {
-        //loadEditOrderAction(order)
-        //loadProductsOrderAction(products)
         setStateMessage(!stateMessage)
     }
 
-    const handleDeleteOrder = () => {
-        /*axios.delete(`${ process.env.REACT_APP_URL_LOCAL }/order/delete/${ _id }`)
+    const handleDeleteMessage = () => {
+        axios.delete(`${ process.env.REACT_APP_URL_LOCAL }/message/delete/${ _id }`)
             .then((resp)=>{
-                deleteOrderAction(_id)
+                console.log(resp)
+                setReload(!reload)
+                deleteMessageAction(_id)
             })
             .catch((error)=>{
                 console.log(error)
-            })*/
+            })
     }
 
 return (
@@ -150,7 +150,7 @@ return (
                 <Button onClick={() => setOpenInformation(!openInformation)}> 
                     <MessageIcon/>
                 </Button>
-                <Button onClick={handleDeleteOrder}> 
+                <Button onClick={handleDeleteMessage}> 
                     <DeleteOutlinedIcon className={classes.deleteIcon}/> 
                 </Button>
             </ButtonGroup>
@@ -179,17 +179,11 @@ return (
     )
 }
 
-/*const mapDispatchToProps = dispatch => ({
-    loadEditOrderAction: (data) => {
-      dispatch(loadEditOrderAction(data))
+const mapDispatchToProps = dispatch => ({
+    deleteMessageAction: (id) => {
+        dispatch(deleteMessageAction(id))
     },
-    loadProductsOrderAction: (data) => {
-        dispatch(loadProductsOrderAction(data))
-    },
-    deleteOrderAction: (id) => {
-        dispatch(deleteOrderAction(id))
-    },
-})*/
+})
 
-export default /*connect( null, mapDispatchToProps )*/(MessageRow);
+export default connect( null, mapDispatchToProps )(MessageRow);
 
