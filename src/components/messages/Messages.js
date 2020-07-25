@@ -4,7 +4,7 @@ import Table from '@material-ui/core/Table';
 import TableCell from '@material-ui/core/TableCell';
 import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
-import OrderRow from './OrderRow';
+import MessageRow from './MessageRow';
 import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
 import Button from '@material-ui/core/Button';
@@ -15,7 +15,7 @@ import TableBody from '@material-ui/core/TableBody';
 import { Link } from "react-router-dom";
 import axios from 'axios';
 import { connect } from 'react-redux';
-import { loadOrdersAction } from '../../redux/actions/orderAction'
+import { loadMessagesAction } from '../../redux/actions/messagesAction'
 
 const useStyles = makeStyles((theme) => ({
     content: {
@@ -32,7 +32,7 @@ const useStyles = makeStyles((theme) => ({
         color: "black",
     },
     table: {
-        marginBottom: 10,
+        margin: '50px 0',
         /*'& .MuiTableCell-sizeSmall': {
             padding: '6px 16px 6px 16px',
         }*/
@@ -43,66 +43,55 @@ const useStyles = makeStyles((theme) => ({
     }
 }));
 
-const Orders = ({ loadOrdersAction, orders }) => {
-  const classes = useStyles();                            
+const Messages = ({ loadMessagesAction, messages }) => {
+  const classes = useStyles();
+  const [reload, setReload] = useState(false)                            
 
   useEffect(() => {
-    axios.get(`${ process.env.REACT_APP_URL_LOCAL }/order`)
+    axios.get(`${ process.env.REACT_APP_URL_LOCAL }/message`)
         .then((resp) => {
             console.log(resp)
-            let orders = resp.data.order
-            loadOrdersAction(orders)
+            let messages = resp.data.messages
+            loadMessagesAction(messages)
         })
         .catch((error) => {
             console.log(error)
         })
-  }, [])
+  }, [reload])
 
   return (
     <div className={classes.content}>
-        <Typography variant='h4' className={classes.title}>Pedidos</Typography>
+        <Typography variant='h4' className={classes.title}>Consultas</Typography>
         <div>
-            <Box align="right">
-                <Link to='/OrderNew'>
-                <Button size="small" variant="outlined" color="primary">
-                    <AddIcon/>
-                </Button>
-                </Link>
-            </Box>
-            <Box align='center' className={classes.boxTable}>
                 <Table size="small" className={classes.table} aria-label="simple table">
                     <TableHead>
                         <TableRow>
                             <TableCell>Nombre</TableCell>
-                            <Hidden smDown>
-                                <TableCell>Telefono</TableCell>
-                                <TableCell>Direccion</TableCell>
-                            </Hidden>
-                            <TableCell></TableCell>
+                            <TableCell>Telefono</TableCell>
+                            <TableCell>Email</TableCell>
                         </TableRow>
                     </TableHead>
                     <TableBody>
                         {
-                            orders.map((data, index) => (
-                                <OrderRow key={index} order={data} />
+                            messages.map((data, index) => (
+                                <MessageRow key={index} messageData={data} setReload={setReload} reload={reload}/>
                             ))
                         }
                     </TableBody>
                 </Table>
-            </Box>
         </div>
     </div>
   );
 }
 
 const mapStateToProps = state => ({
-    orders: state.ordersReducer.orders
+    messages: state.messagesReducer.messages
 })
   
 const mapDispatchToProps = dispatch => ({
-    loadOrdersAction: (data) => {
-      dispatch(loadOrdersAction(data))
+    loadMessagesAction: (data) => {
+      dispatch(loadMessagesAction(data))
     },
 })
 
-export default connect( mapStateToProps, mapDispatchToProps )(Orders);
+export default connect( mapStateToProps, mapDispatchToProps )(Messages);
