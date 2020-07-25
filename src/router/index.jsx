@@ -32,7 +32,7 @@ export default function Router() {
         <Grid item xs={12} sm={12} md={10} xl={10} lg={10}>
             <Switch>
               <Route exact path="/" component={Login} />
-              <Route exact path='/Count' component={Account}/>
+              <Route exact path="/Count" component={Account} />
               <Route exact path="/Category" component={Category} />
               <Route exact path='/Settings' component={Settings}/>
               <Route exact path='/Images' component={Images}/>
